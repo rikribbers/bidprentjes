@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  mssql-example:
+    image: bidprentjes-api
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_PID: developer
+      MSSQL_SA_PASSWORD: Heiligboontje1!
+

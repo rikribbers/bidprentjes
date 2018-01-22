@@ -1,0 +1,16 @@
+{
+  "name": "bidprentjes-api",
+  "version": "0.0.1",
+  "description": "Node.js with SQL Server on Docker application serving bidprentjes data",
+  "author": "Rik Ribbers",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.1",
+    "request": "^2.83.0",
+    "tedious": "^2.2.3",
+    "pug": "^2.0.0-rc.4"
+  }
+}

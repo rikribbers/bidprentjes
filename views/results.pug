@@ -1,0 +1,17 @@
+extends layout.pug
+
+block content
+  table#results-table.table.table-striped
+    thead
+      tr
+        th Naam
+        th Geboren
+        th Gestorven
+        th Geboorteplaats
+    tbody
+      each item in rows
+        tr
+          td= item.Naam
+          td= item.Geboren
+          td= item.Gestorven
+          td= item.Geboorteplaats
