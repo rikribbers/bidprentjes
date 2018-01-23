@@ -1,175 +1,45 @@
 var express = require("express");
 var app = express();
-var connection = require('tedious').Connection;
-var sqlrequest = require('tedious').Request;
 var apirequest = require('request');
 // Integration
 app.set('view engine', 'pug');
 
-//set up the connection information
-var config = {
-    userName: 'sa',
-    password: 'Heiligboontje1!',
-    server: 'localhost',
-    options: {
-        database: 'bidprentjes'
-    }
-}
+// pools will use environment variables
+// for connection information
+const { Pool, Client } = require('pg')
 
 var server = app.listen(8080, function () {
     console.log("Listening on port %s...", server.address().port);
 });
 
+function query(res,query,parameters) {
+    const client = new Client()
+    
+    client.connect()
+    
+    client.query(query, parameters, (err, sqlres) => {
+      if (err) {
+        console.log(err.stack)
+        res.send([])
+      }
+      else { 
+        res.send(sqlres.rows)
+      }
+      client.end()
+    })  
+}
+
 app.get('/api/v1/geboren/:date', function (req, res) {
-
-    var conn = new connection(config);
-
-    conn.on('connect', function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            var date = req.params.date;
-            sqlreq = new sqlrequest("SELECT * FROM Bidprentjes WHERE Geboren='" + date + "' FOR JSON AUTO", function (err, rowCount) {
-                if (err) {
-                    console.log(err);
-                }
-            });
-
-            sqlreq.on('row', function (columns) {
-                columns.forEach(function (column) {
-                    if (column.value === null) {
-                        console.log('NULL');
-                    } else {
-                        res.send(column.value);
-                    }
-                });
-            });
-
-            // catch the "no results" 
-            sqlreq.on('doneInProc', function (rowCount, more, rows) {
-                if (rowCount == 0) {
-                    res.send('[]');
-                }
-            });
-
-            // clean up after yourself
-            sqlreq.on('requestCompleted', function () {
-                conn.close();
-            });
-
-            conn.execSql(sqlreq);
-        }
-    });
-
-    conn.on('error', function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("Error called with no err object.");
-        }
-    });
+    query(res,'SELECT * FROM bidprentjes WHERE geboren=$1::timestamp',[req.params.date])
 })
 
 app.get('/api/v1/gestorven/:date', function (req, res) {
-
-    var conn = new connection(config);
-
-    conn.on('connect', function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            var date = req.params.date;
-            sqlreq = new sqlrequest("SELECT * FROM Bidprentjes WHERE Gestorven='" + date + "' FOR JSON AUTO", function (err, rowCount) {
-                if (err) {
-                    console.log(err);
-                }
-            });
-
-            sqlreq.on('row', function (columns) {
-                columns.forEach(function (column) {
-                    if (column.value === null) {
-                        console.log('NULL');
-                    } else {
-                        res.send(column.value);
-                    }
-                });
-            });
-
-            // catch the "no results" 
-            sqlreq.on('doneInProc', function (rowCount, more, rows) {
-                if (rowCount == 0) {
-                    res.send('[]');
-                }
-            });
-
-            // clean up after yourself
-            sqlreq.on('requestCompleted', function () {
-                conn.close();
-            });
-
-            conn.execSql(sqlreq);
-        }
-    });
-
-    conn.on('error', function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("Error called with no err object.");
-        }
-    });
+    query(res,'SELECT * FROM bidprentjes WHERE gestorven=$1::timestamp',[req.params.date])
 })
 
 app.get('/api/v1/geboorteplaats/:plaatsnaam', function (req, res) {
-
-    var conn = new connection(config);
-
-    conn.on('connect', function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            var name = req.params.plaatsnaam;
-            sqlreq = new sqlrequest("SELECT * FROM Bidprentjes WHERE Geboorteplaats='" + name + "' FOR JSON AUTO", function (err, rowCount) {
-                if (err) {
-                    console.log(err);
-                }
-            });
-
-            sqlreq.on('row', function (columns) {
-                columns.forEach(function (column) {
-                    if (column.value === null) {
-                        console.log('NULL');
-                    } else {
-                        res.send(column.value);
-                    }
-                });
-            });
-
-            // catch the "no results" 
-            sqlreq.on('doneInProc', function (rowCount, more, rows) {
-                if (rowCount == 0) {
-                    res.send('[]');
-                }
-            });
-
-            // clean up after yourself
-            sqlreq.on('requestCompleted', function () {
-                conn.close();
-            });
-
-            conn.execSql(sqlreq);
-        }
-    });
-
-    conn.on('error', function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("Error called with no err object.");
-        }
-    });
+    query(res,'SELECT * FROM bidprentjes WHERE geboorteplaats=$1::text',[req.params.plaatsnaam])
 })
-
 
 app.get('/view/geboren/:date', function (req, res) {
 
@@ -177,7 +47,7 @@ app.get('/view/geboren/:date', function (req, res) {
 
     apirequest.get('http://localhost:8080/api/v1/geboren/' + date, function (error, response, body) {
         if (error) {
-            throw error;
+            throw error
         }
         const data = JSON.parse(body);
         res.render('results', { title: 'Resultaten', rows: data })

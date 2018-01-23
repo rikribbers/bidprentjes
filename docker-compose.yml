@@ -1,16 +1,29 @@
 version: '3'
 
 services:
-  mssql-example:
+  database:
+    image: postgres:10-alpine
+    hostname: database
+    container_name: database
+    volumes:
+      - ./initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_PASSWORD: Heiligboontje1!
+      POSTGRES_USER: DePastoor
+      POSTGRES_DB: bidprentjes 
+
+  bidprentjes-api:
     image: bidprentjes-api
     restart: unless-stopped
+    links:
+      - database
     ports:
       - 8080:8080
     build:
       context: .
       dockerfile: Dockerfile
     environment:
-      ACCEPT_EULA: Y
-      MSSQL_PID: developer
-      MSSQL_SA_PASSWORD: Heiligboontje1!
-
+      PGUSER: DePastoor 
+      PGHOST: database
+      PGPASSWORD: Heiligboontje1!
+      PGDATABASE: bidprentjes
