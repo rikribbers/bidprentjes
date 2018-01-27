@@ -33,12 +33,12 @@ app.get('/api/v1/geboren/:date', function (req, res) {
     query(res,'SELECT * FROM bidprentjes WHERE geboren=$1::timestamp',[req.params.date])
 })
 
-app.get('/api/v1/gestorven/:date', function (req, res) {
-    query(res,'SELECT * FROM bidprentjes WHERE gestorven=$1::timestamp',[req.params.date])
+app.get('/api/v1/overleden/:date', function (req, res) {
+    query(res,'SELECT * FROM bidprentjes WHERE overleden=$1::timestamp',[req.params.date])
 })
 
 app.get('/api/v1/geboorteplaats/:plaatsnaam', function (req, res) {
-    query(res,'SELECT * FROM bidprentjes WHERE geboorteplaats=$1::text',[req.params.plaatsnaam])
+    query(res,'SELECT * FROM bidprentjes WHERE lower(geboorteplaats)=lower($1)::text',[req.params.plaatsnaam])
 })
 
 app.get('/view/geboren/:date', function (req, res) {
@@ -54,11 +54,11 @@ app.get('/view/geboren/:date', function (req, res) {
     });
 })
 
-app.get('/view/gestorven/:date', function (req, res) {
+app.get('/view/overleden/:date', function (req, res) {
 
     var date = req.params.date;
 
-    apirequest.get('http://localhost:8080/api/v1/gestorven/' + date, function (error, response, body) {
+    apirequest.get('http://localhost:8080/api/v1/overleden/' + date, function (error, response, body) {
         if (error) {
             throw error;
         }
