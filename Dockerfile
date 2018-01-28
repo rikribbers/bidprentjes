@@ -1,6 +1,6 @@
 FROM node:9-alpine
 
-RUN npm install pug request pg
+RUN npm install pug request pg moment
 
 # Create app directory
 RUN mkdir -p /usr/src/app

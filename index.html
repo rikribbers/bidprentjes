@@ -11,34 +11,85 @@
         crossorigin="anonymous">
 
     <title>Zoeken op bidprentjes</title>
-   
+
 </head>
 
 <body>
 
     <div class="container">
-        <div class="form-group">
-            <label for="geboren-date-input" class="col-2 col-form-label">Zoeken op geboortedatum</label>
-            <div class="col-10">
-                <input id="myinput" class="form-control" type="date" value="2011-08-19" id="geboren-input" onfocusout="myFunction()">
-            </div>
-            <div class="col-10">
-                <a id="mylink"></a>
+        <label for="geboren-input" class="col-form-label">Zoeken op geboortedatum</label>
+        <div class="input-group mb-3">
+            <input id="geboren-input" class="form-control" type="date" onfocusout="maakGeborenLink()">
+            <div class="input-group-append">
+                <span class="input-group-text" id="">
+                    <a id="geboren-link" class="button" target="_blank">Zoek</a>
+                </span>
             </div>
         </div>
-    
-      <script>
-        function myFunction() {
-            var x, text;
-        
-            // Get the value of the input field with id="numb"
-            x = document.getElementById("myinput").value;
-            text='https://rikribbers.nl/bidprentjes/view/geboren/' + x;
-            document.getElementById("mylink").innerHTML = "Bekijk de resultaten";
-            document.getElementById("mylink").href = text;
-        }
-        </script>      
 
+        <script>
+            function maakGeborenLink() {
+                text = 'localhost:8080/view/geboren/' + document.getElementById("geboren-input").value;
+                console.log(text);
+                document.getElementById("geboren-link").href = text;
+            }
+        </script>
+
+        <label for="overleden-input" class="col-form-label">Zoeken op datum overleden</label>
+        <div class="input-group mb-3">
+            <input id="overleden-input" class="form-control" type="date" onfocusout="maakOverledenLink()">
+            <div class="input-group-append">
+                <span class="input-group-text" id="">
+                    <a id="overleden-link" class="button" target="_blank">Zoek</a>
+                </span>
+            </div>
+        </div>
+
+        <script>
+            function maakOverledenLink() {
+                text = 'localhost:8080/view/overleden/' + document.getElementById("overleden-input").value;
+                console.log(text);
+                document.getElementById("overleden-link").href = text;
+            }
+        </script>
+
+        <label for="achternaam-input" class="col-form-label">Zoeken op achternaam</label>
+        <div class="input-group mb-3">
+            <input id="achternaam-input" type="text" class="form-control" placeholder="Geef hier de achternaam op"
+                aria-describedby="basic-addon2" onfocusout="maakAchternaamLink()">
+            <div class="input-group-append">
+                <span class="input-group-text" id="">
+                    <a id="achternaam-link" class="button" target="_blank">Zoek</a>
+                </span>
+            </div>
+        </div>
+
+        <script>
+            function maakAchternaamLink() {
+                text = 'localhost:8080/view/achternaam/' + document.getElementById("achternaam-input").value;
+                console.log(text);
+                document.getElementById("achternaam-link").href = text.toLowerCase();
+            }
+        </script>
+
+        <label for="geboorteplaats-input" class="col-form-label">Zoeken op geboorteplaats</label>
+        <div class="input-group mb-3">
+            <input id="geboorteplaats-input" type="text" class="form-control" placeholder="Geef hier de geboorteplaats op"
+                aria-describedby="basic-addon2" onfocusout="maakGeboorteplaatsLink()">
+            <div class="input-group-append">
+                <span class="input-group-text" id="">
+                    <a id="geboorteplaats-link" class="button" target="_blank">Zoek</a>
+                </span>
+            </div>
+        </div>
+
+        <script>
+            function maakGeboorteplaatsLink() {
+                text = 'localhost:8080/view/geboorteplaats/' + document.getElementById("geboorteplaats-input").value;
+                console.log(text);
+                document.getElementById("geboorteplaats-link").href = text.toLowerCase();
+            }
+        </script>
 
     </div>
     <!-- Optional JavaScript -->
@@ -48,7 +99,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>        
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

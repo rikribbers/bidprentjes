@@ -4,14 +4,14 @@ block content
   table#results-table.table.table-striped
     thead
       tr
-        th Naam
+        th Achternaam
         th Geboren
         th Overleden
         th Geboorteplaats
     tbody
       each item in rows
         tr
-          td=item.naam
-          td=item.geboren
-          td=item.overleden
+          td=item.achternaam
+          td=moment(item.geboren).format('YYYY-MM-DD')
+          td=moment(item.overleden).format('YYYY-MM-DD')
           td=item.geboorteplaats

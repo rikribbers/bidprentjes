@@ -41,6 +41,10 @@ app.get('/api/v1/geboorteplaats/:plaatsnaam', function (req, res) {
     query(res,'SELECT * FROM bidprentjes WHERE lower(geboorteplaats)=lower($1)::text',[req.params.plaatsnaam])
 })
 
+app.get('/api/v1/achternaam/:naam', function (req, res) {
+    query(res,'SELECT * FROM bidprentjes WHERE lower(achternaam)=lower($1)::text',[req.params.naam])
+})
+
 app.get('/view/geboren/:date', function (req, res) {
 
     var date = req.params.date;
@@ -50,7 +54,7 @@ app.get('/view/geboren/:date', function (req, res) {
             throw error
         }
         const data = JSON.parse(body);
-        res.render('results', { title: 'Resultaten', rows: data })
+        res.render('results', { title: 'Resultaten', rows: data, moment: require('moment') })
     });
 })
 
@@ -63,7 +67,7 @@ app.get('/view/overleden/:date', function (req, res) {
             throw error;
         }
         const data = JSON.parse(body);
-        res.render('results', { title: 'Resultaten', rows: data })
+        res.render('results', { title: 'Resultaten', rows: data, moment: require('moment') })
     });
 })
 
@@ -76,6 +80,19 @@ app.get('/view/geboorteplaats/:plaatsnaam', function (req, res) {
             throw error;
         }
         const data = JSON.parse(body);
-        res.render('results', { title: 'Resultaten', rows: data })
+        res.render('results', { title: 'Resultaten', rows: data, moment: require('moment') })
+    });
+})
+
+app.get('/view/achternaam/:naam', function (req, res) {
+
+    var name = req.params.naam;
+
+    apirequest.get('http://localhost:8080/api/v1/achternaam/' + name, function (error, response, body) {
+        if (error) {
+            throw error;
+        }
+        const data = JSON.parse(body);
+        res.render('results', { title: 'Resultaten', rows: data, moment: require('moment') })
     });
 })
