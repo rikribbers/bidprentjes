@@ -5,6 +5,7 @@ block content
     thead
       tr
         th Achternaam
+        th Voornaam
         th Geboren
         th Overleden
         th Geboorteplaats
@@ -12,6 +13,7 @@ block content
       each item in rows
         tr
           td=item.achternaam
+          td=item.voornaam
           td=moment(item.geboren).format('YYYY-MM-DD')
           td=moment(item.overleden).format('YYYY-MM-DD')
           td=item.geboorteplaats
