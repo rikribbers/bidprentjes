@@ -4,7 +4,8 @@ CREATE TABLE bidprentjes (
     overleden date,
     achternaam character varying(255),
     geboorteplaats character varying(255),
-    voornaam character varying
+    voorvoegsel character varying(255),
+    voornaam character varying(255)
 );
 
 CREATE SEQUENCE bidprentjes_id_seq

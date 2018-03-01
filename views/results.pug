@@ -6,6 +6,7 @@ block content
       tr
         th Achternaam
         th Voornaam
+        th Voorvoegsel
         th Geboren
         th Overleden
         th Geboorteplaats
@@ -14,6 +15,7 @@ block content
         tr
           td=item.achternaam
           td=item.voornaam
-          td=moment(item.geboren).format('YYYY-MM-DD')
-          td=moment(item.overleden).format('YYYY-MM-DD')
+          td=item.voorvoegsel
+          td=moment(item.geboren).format('DD-MM-YYYY')
+          td=moment(item.overleden).format('DD-MM-YYYY')
           td=item.geboorteplaats
