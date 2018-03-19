@@ -19,3 +19,22 @@ block content
           td=moment(item.geboren).format('DD-MM-YYYY')
           td=moment(item.overleden).format('DD-MM-YYYY')
           td=item.geboorteplaats
+
+  script.
+    $(document).ready( function () { 
+      $.fn.dataTable.moment('DD-mm-YYYY');
+      $("#results-table").DataTable( {
+        searching: false,
+        lengthChange: false,
+        pageLength: 20,
+        language: {
+          info:  "Resultaat _START_ tot _END_ van totaal _TOTAL_ resultaten",
+          paginate: {
+            first:      "Begin",
+            previous:   "Vorige",
+            next:       "Volgende",
+            last:       "Laatste"
+          }
+        }
+      });
+    })

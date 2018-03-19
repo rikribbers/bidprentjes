@@ -1,6 +1,6 @@
 # Intro
 
-This is a small node.js postgresql tool used in my father personal website.
+This is a small node.js postgresql tool used in my fathers personal website.
 
 It uses docker, node.js and postgress. This is is more or less based on https://github.com/twright-msft/mssql-node-docker-demo-app.git
 
