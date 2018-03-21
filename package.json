@@ -1,6 +1,6 @@
 {
   "name": "bidprentjes-api",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Node.js with Postgresql Server on Docker application serving bidprentjes data",
   "author": "Rik Ribbers",
   "main": "server.js",
@@ -8,11 +8,11 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.16.1",
-    "request": "^2.83.0",
-    "pug": "^2.0.0-rc.4",
+    "express": "^4.16.3",
+    "request": "^2.85.0",
+    "pug": "^2.0.3",
     "pg": "^7.4.1",
-    "moment": "^2.20.1",
-    "mathjs": "^4.0.0"
+    "moment": "^2.21.0",
+    "mathjs": "^4.0.1"
   }
 }
