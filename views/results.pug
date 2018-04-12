@@ -5,20 +5,22 @@ block content
     thead
       tr
         th Achternaam
-        th Voornaam
         th Voorvoegsel
+        th Voornaam
         th Geboren
         th Overleden
         th Geboorteplaats
+        th Plaats Begraven/Crematie
     tbody
       each item in rows
         tr
           td=item.achternaam
-          td=item.voornaam
           td=item.voorvoegsel
+          td=item.voornaam
           td=moment(item.geboren).format('DD-MM-YYYY')
           td=moment(item.overleden).format('DD-MM-YYYY')
           td=item.geboorteplaats
+          td=item.rustplaats
 
   script.
     $(document).ready( function () { 
