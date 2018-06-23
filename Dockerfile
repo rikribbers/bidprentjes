@@ -1,7 +1,5 @@
 FROM node:9-alpine
 
-RUN npm install pug request pg moment mathjs
-
 # Create app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="nl">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -11,12 +10,25 @@
         crossorigin="anonymous">
 
     <title>Zoeken op bidprentjes</title>
-
 </head>
-
 <body>
-
     <div class="container">
+        <div>Doorzoek de bidprentjes op basis van een voornaam,achternaam, geboortejaar of jaar van sterven én plaatsnaam.
+            <br>
+            b.v. 'Hendrikus Ribbers' of 'Ribbers Beltrum' of 'Ribbers 1983'
+        <br>
+        De zoekresultaten zijn beperkt to 50 resultaten om een overbelasting van de database te voorkomen. </div>
+        <label for="search-input" class="col-form-label">Zoeken (beta versie)</label>
+        <div class="input-group mb-3">
+            <input id="search-input" type="text" class="form-control" placeholder="Geef hier de zoekterm op" aria-describedby="basic-addon2"
+            onfocusout="maakSearchLink()">
+            <div class="input-group-append">
+                <span class="input-group-text" id="">
+                    <a id="search-link" class="button" target="_blank">Zoek</a>
+                </span>
+            </div>
+        </div>
+
         <label for="geboren-input" class="col-form-label">Zoeken op geboortedatum</label>
         <div class="input-group mb-3">
             <input id="geboren-input" class="form-control" type="date" onfocusout="maakGeborenLink()">
@@ -90,7 +102,13 @@
                 document.getElementById("geboorteplaats-link").href = text.toLowerCase();
             }
         </script>
-
+        <script>
+                function maakSearchLink() {
+                    text = 'localhost:8080/view/search/' + document.getElementById("search-input").value;
+                    console.log(text);
+                    document.getElementById("search-link").href = text.toLowerCase();
+                }
+        </script>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -101,5 +119,4 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 </body>
-
 </html>
