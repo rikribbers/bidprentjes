@@ -13,9 +13,10 @@
 </head>
 <body>
     <div class="container">
-        <div>Doorzoek de bidprentjes op basis van een voornaam,achternaam, geboortejaar of jaar van sterven én plaatsnaam.
+        <div>Doorzoek de database op basis van een voornaam, achternaam, geboortejaar of jaar van overlijden én plaatsnaam. Deze functionaliteit is 
+            nog in betá fase en kan dus nog wat foutjes bevatten, mocht je hier tegenaan lopen laat het dan weten.
             <br>
-            b.v. 'Hendrikus Ribbers' of 'Ribbers Beltrum' of 'Ribbers 1983'
+            b.v. 'Hendrikus Ribbers' of 'Ribbers Beltrum' of 'Ribbers 1983' of 'Hendrikus Ribbers Beltrum 1983'
         <br>
         De zoekresultaten zijn beperkt to 50 resultaten om een overbelasting van de database te voorkomen. </div>
         <label for="search-input" class="col-form-label">Zoeken (beta versie)</label>
@@ -104,7 +105,7 @@
         </script>
         <script>
                 function maakSearchLink() {
-                    text = 'localhost:8080/view/search/' + document.getElementById("search-input").value;
+                    text = 'localhost:8080/view/search/' + document.getElementById("search-input").value.replace(' ','+');
                     console.log(text);
                     document.getElementById("search-link").href = text.toLowerCase();
                 }

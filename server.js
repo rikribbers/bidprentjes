@@ -136,7 +136,7 @@ function query2(res, whereclause, parameters, page, orderby) {
 function stripInput(input) {
     //console.log('stripInput=' + input)
     // remove accents and to lower case
-    result = accents.remove(input).toLowerCase()
+    result = accents.remove(input).toLowerCase().replace(/+/g,'*')
     // reqex only lowecase characters numbers 
     // and the '*' character', remove the rest
     result = result.replace(/[^a-z\*1-9]/g, '')
@@ -224,7 +224,7 @@ app.get('/view/achternaam/:naam', function (req, res) {
 
 app.get('/view/search/:query', function (req, res) {
 
-    q = '*' + stripInput(req.params.query.replace(/ /g, '*')) + '*'
+    q = '+' + stripInput(req.params.query) + '+'
    
     apirequest.get('http://localhost:8080/api/v2/search/' + q, function (error, response, body) {
         if (error) {
