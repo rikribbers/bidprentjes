@@ -13,15 +13,25 @@
 </head>
 <body>
     <div class="container">
-        <div>Doorzoek de database op basis van een voornaam, achternaam, geboortejaar of jaar van overlijden én plaatsnaam. Deze functionaliteit is 
-            nog in betá fase en kan dus nog wat foutjes bevatten, mocht je hier tegenaan lopen laat het dan weten.
+        <div>Doorzoek eenvoudig alle bidprentjes met behulp van een vrij zoekveld. Geef de gewenste zoektermen op in het zoekveld.<br>
             <br>
-            b.v. 'Hendrikus Ribbers' of 'Ribbers Beltrum' of 'Ribbers 1983' of 'Hendrikus Ribbers Beltrum 1983'
+            Let wel op de volgorde, deze is als volgt: de voornaam, voorvoegsel, 
+            achternaam, geboortedatum of datum van overlijden én plaatsnaam. Weet je een veld niet laat deze dan gewoon weg.
+            <br>
+            b.v. 'Theodorus Ribbers' of 'Ribbers Beltrum' of 'Ribbers 1962' of 'Theodorus Ribbers Beltrum 1962'
+            Deze functionaliteit is nog in betá fase en kan dus nog wat foutjes bevatten, mocht je hier tegenaan lopen laat het dan weten.
+            <br>
+            Geavanceerde zoek opties:
+            - Zoeken op volledige datum; Dit gebeurd in het formaat ddmmYYYY. b.v. "081962" betekend augustus 1962 
+            en "25081962" betekend 25 augustus 1962.
+            - Zoeken met wildcard; Het zoeken bevat ook de mogelijk of met wildcards te zoeken. b.v.
+             "Hen*ikus Beltrum 1999" zal een Hendrikus en een Henrikus als resultaat 
+             
         <br>
-        De zoekresultaten zijn beperkt to 50 resultaten om een overbelasting van de database te voorkomen. </div>
+        Op dit moement zijn de zoekresultaten beperkt to 100 resultaten om een overbelasting van de database te voorkomen. </div>
         <label for="search-input" class="col-form-label">Zoeken (beta versie)</label>
         <div class="input-group mb-3">
-            <input id="search-input" type="text" class="form-control" placeholder="Geef hier de zoekterm op" aria-describedby="basic-addon2"
+            <input id="search-input" type="text" class="form-control" placeholder="Geef hier de zoektermen op" aria-describedby="basic-addon2"
             onfocusout="maakSearchLink()">
             <div class="input-group-append">
                 <span class="input-group-text" id="">

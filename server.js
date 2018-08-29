@@ -4,6 +4,7 @@ var apirequest = require('request');
 var math = require('mathjs');
 var util = require('util')
 var accents = require('remove-accents')
+var moment = require('moment')
 // Integration
 app.set('view engine', 'pug');
 
@@ -15,7 +16,7 @@ const { Pool, Client } = require('pg')
 const pool = new Pool({
     max: 75,
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 10000,
+    connectionTimeoutMillis: 30000,
     Client: Client
 });
 
@@ -38,12 +39,12 @@ function init_search() {
                 }
 
                 internalquery('SELECT * FROM bidprentjes b WHERE NOT EXISTS (SELECT 1 FROM search s WHERE s.id=b.id) ORDER BY b.id OFFSET $1 LIMIT $2', [count - limit, limit], (result) => {
-                    // console.log(util.inspect(result, {showHidden: false, depth: null}))
+                    //console.log(util.inspect(result, {showHidden: false, depth: null}))
 
                     for (i = 0; i < result.rowCount; i++) {
                         item = result.rows[i]
                         // order is important here
-                        strippedInput = ''
+                        var strippedInput = ''
                         if (item.voornaam != null) {
                             strippedInput += item.voornaam
                         }
@@ -53,17 +54,17 @@ function init_search() {
                         if (item.achternaam != null) {
                             strippedInput += item.achternaam
                         }
-                        if (item.rustplaats != null) {
-                            strippedInput += item.rustplaats
-                        }
                         if (item.geboorteplaats != null) {
                             strippedInput += item.geboorteplaats
                         }
+                        if (item.rustplaats != null) {
+                            strippedInput += item.rustplaats
+                        }
                         if (item.geboren != null) {
-                            strippedInput += item.geboren
+                            strippedInput += moment(item.geboren).format('DDMMYYYY')
                         }
                         if (item.overleden != null) {
-                            strippedInput += item.overleden
+                            strippedInput += moment(item.overleden).format('DDMMYYYY')
                         }
                         internalquery('INSERT INTO search (id,value) VALUES ($1,$2)', [item.id, stripInput(strippedInput)], (result) => { return })
                     }
@@ -136,7 +137,7 @@ function query2(res, whereclause, parameters, page, orderby) {
 function stripInput(input) {
     //console.log('stripInput=' + input)
     // remove accents and to lower case
-    result = accents.remove(input).toLowerCase().replace(/+/g,'*')
+    result = accents.remove(input).toLowerCase().replace(/[+]/g,'*')
     // reqex only lowecase characters numbers 
     // and the '*' character', remove the rest
     result = result.replace(/[^a-z\*1-9]/g, '')
@@ -165,9 +166,13 @@ app.get('/api/v2/achternaam/:naam/:page', function (req, res) {
 })
 
 app.get('/api/v2/search/:query', function (req, res) {
+    q = '+' + stripInput(req.params.query) + '+'
     // replace wildcard * for %
-    q = req.params.query.replace(/\*/g,'%')
-    query(res, 'SELECT b.* FROM bidprentjes b,search s WHERE s.value like($1)::text AND s.id=b.id LIMIT 50', [q])
+            
+    q = q.replace(/[+]/g,'%')
+    q = q.replace(/[\*]/g,'%')
+    console.log(q)
+    query(res, 'SELECT b.* FROM bidprentjes b,search s WHERE s.value like($1)::text AND s.id=b.id LIMIT 100', [q])
 })
 
 app.get('/view/geboren/:date', function (req, res) {
@@ -223,10 +228,7 @@ app.get('/view/achternaam/:naam', function (req, res) {
 })
 
 app.get('/view/search/:query', function (req, res) {
-
-    q = '+' + stripInput(req.params.query) + '+'
-   
-    apirequest.get('http://localhost:8080/api/v2/search/' + q, function (error, response, body) {
+    apirequest.get('http://localhost:8080/api/v2/search/' + req.params.query, function (error, response, body) {
         if (error) {
             throw error;
         }
