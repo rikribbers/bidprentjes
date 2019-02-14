@@ -8,8 +8,8 @@ block content
         th Voorvoegsel
         th Voornaam
         th Geboren
-        th Overleden
         th Geboorteplaats
+        th Overleden
         th Plaats Begraven/Crematie
     tbody
       each item in rows
@@ -18,8 +18,8 @@ block content
           td=item.voorvoegsel
           td=item.voornaam
           td=moment(item.geboren).format('DD-MM-YYYY')
-          td=moment(item.overleden).format('DD-MM-YYYY')
           td=item.geboorteplaats
+          td=moment(item.overleden).format('DD-MM-YYYY')
           td=item.rustplaats
 
   script.
