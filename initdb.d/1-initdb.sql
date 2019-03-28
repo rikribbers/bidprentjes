@@ -18,4 +18,4 @@ CREATE SEQUENCE bidprentjes_id_seq
 
 ALTER SEQUENCE bidprentjes_id_seq OWNED BY bidprentjes.id;
 
-COPY bidprentjes(id,geboren,overleden,achternaam,geboorteplaats,voorvoegsel,voornaam,rustplaats) FROM '/docker-entrypoint-initdb.d/0-bidprentjes-data.csv' DELIMITER ';' CSV;
+COPY bidprentjes(id,geboren,overleden,achternaam,geboorteplaats,voorvoegsel,voornaam,rustplaats) FROM '/docker-entrypoint-initdb.d/0-bidprentjes-data.csv' DELIMITER ',' CSV;
