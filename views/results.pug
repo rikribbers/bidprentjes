@@ -4,6 +4,7 @@ block content
   table#results-table.table.table-striped
     thead
       tr
+        th Scan
         th Achternaam
         th Voorvoegsel
         th Voornaam
@@ -14,6 +15,10 @@ block content
     tbody
       each item in rows
         tr
+          if item.scan
+            td="Ja"
+          else 
+            td='-'
           td=item.achternaam
           td=item.voorvoegsel
           td=item.voornaam
